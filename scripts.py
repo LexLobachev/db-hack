@@ -26,19 +26,14 @@ def remove_chastisements(schoolkid_name='Фролов Иван'):
 def create_commendation(schoolkid_name='Фролов Иван', subject_name='Математика'):
     laudatory_phrases = ('Молодец!', 'Отлично!', 'Хвалю!', 'Приятно удивляет!', 'Так держать!', 'Супер!')
     schoolkid = get_schoolkid(schoolkid_name)
-    try:
-        lessons = Lesson.objects.filter(
-            year_of_study=schoolkid.year_of_study,
-            group_letter=schoolkid.group_letter,
-            subject__title__contains=subject_name).order_by('-date')
-        Commendation.objects.create(
-            text=random.choice(laudatory_phrases),
-            created=lessons[0].date,
-            schoolkid=schoolkid,
-            subject=lessons[0].subject,
-            teacher=lessons[0].teacher
-        )
-    except Lesson.DoesNotExist:
-        print('Проверьте, правильно ли вы ввели название предмета, такого предмета нет')
-    except Lesson.MultipleObjectsReturned:
-        print('Найдено несколько совпадений, введите более точные данные')
+    lessons = Lesson.objects.filter(
+        year_of_study=schoolkid.year_of_study,
+        group_letter=schoolkid.group_letter,
+        subject__title__contains=subject_name).order_by('-date').first()
+    Commendation.objects.create(
+        text=random.choice(laudatory_phrases),
+        created=lessons.date,
+        schoolkid=schoolkid,
+        subject=lessons.subject,
+        teacher=lessons.teacher
+    )
