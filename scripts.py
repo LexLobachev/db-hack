@@ -2,6 +2,9 @@ import random
 from datacenter.models import Mark, Schoolkid, Chastisement, Lesson, Commendation
 
 
+laudatory_phrases = ('Молодец!', 'Отлично!', 'Хвалю!', 'Приятно удивляет!', 'Так держать!', 'Супер!')
+
+
 def get_schoolkid(schoolkid_name):
     try:
         child = Schoolkid.objects.get(full_name__contains=schoolkid_name)
@@ -24,7 +27,6 @@ def remove_chastisements(schoolkid_name='Фролов Иван'):
 
 
 def create_commendation(schoolkid_name='Фролов Иван', subject_name='Математика'):
-    laudatory_phrases = ('Молодец!', 'Отлично!', 'Хвалю!', 'Приятно удивляет!', 'Так держать!', 'Супер!')
     schoolkid = get_schoolkid(schoolkid_name)
     lessons = Lesson.objects.filter(
         year_of_study=schoolkid.year_of_study,
