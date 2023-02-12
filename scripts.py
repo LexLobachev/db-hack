@@ -2,7 +2,7 @@ import random
 from datacenter.models import Mark, Schoolkid, Chastisement, Lesson, Commendation
 
 
-laudatory_phrases = ('Молодец!', 'Отлично!', 'Хвалю!', 'Приятно удивляет!', 'Так держать!', 'Супер!')
+LAUDATORY_PHRASES = ('Молодец!', 'Отлично!', 'Хвалю!', 'Приятно удивляет!', 'Так держать!', 'Супер!')
 
 
 def get_schoolkid(schoolkid_name):
@@ -33,7 +33,7 @@ def create_commendation(schoolkid_name='Фролов Иван', subject_name='М
         group_letter=schoolkid.group_letter,
         subject__title__contains=subject_name).order_by('-date').first()
     Commendation.objects.create(
-        text=random.choice(laudatory_phrases),
+        text=random.choice(LAUDATORY_PHRASES),
         created=lessons.date,
         schoolkid=schoolkid,
         subject=lessons.subject,
