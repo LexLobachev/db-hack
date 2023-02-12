@@ -28,14 +28,14 @@ def remove_chastisements(schoolkid_name='Фролов Иван'):
 
 def create_commendation(schoolkid_name='Фролов Иван', subject_name='Математика'):
     schoolkid = get_schoolkid(schoolkid_name)
-    lessons = Lesson.objects.filter(
+    lesson = Lesson.objects.filter(
         year_of_study=schoolkid.year_of_study,
         group_letter=schoolkid.group_letter,
         subject__title__contains=subject_name).order_by('-date').first()
     Commendation.objects.create(
         text=random.choice(LAUDATORY_PHRASES),
-        created=lessons.date,
+        created=lesson.date,
         schoolkid=schoolkid,
-        subject=lessons.subject,
-        teacher=lessons.teacher
+        subject=lesson.subject,
+        teacher=lesson.teacher
     )
